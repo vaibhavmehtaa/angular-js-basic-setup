@@ -25,7 +25,8 @@
     "grunt-open": "~0.2.3",
     "grunt-serve": "~0.1.6",
     "grunt-http-server": "~2.0.0",
-    "grunt-concurrent": "~2.3.1"
+    "grunt-concurrent": "~2.3.1",
+    "grunt-contrib-copy": "~1.0.0"
   },
   "dependencies": {
     "grunt-contrib-sass": "~1.0.0"

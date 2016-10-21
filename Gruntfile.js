@@ -73,6 +73,26 @@ module.exports = function(grunt) {
         //     build: ['path/to/dir/one', 'path/to/dir/two'],
         //     release: ['path/to/another/dir/one', 'path/to/another/dir/two']
         // },
+        copy: {
+            images: {
+                expand: true,
+                cwd: 'src/',
+                src: 'images/**',
+                dest: 'dist/'
+            },
+            media: {
+                expand: true,
+                cwd: 'src/',
+                src: 'media/**',
+                dest: 'dist/'
+            },
+            fonts: {
+                expand: true,
+                cwd: 'src/',
+                src: 'fonts/**',
+                dest: 'dist/'
+            }
+        },
         watch: {
             css: {
                 files: ['src/scss/**/*.scss'],
@@ -85,6 +105,10 @@ module.exports = function(grunt) {
             scripts: {
                 files: ['www/**/*.js', 'external_files/**/*.js'],
                 tasks: ['tags']
+            },
+            copy_statics: {
+                files: ['src/fonts/**/*', 'src/images/**/*', 'src/media/**/*'],
+                tasks: ['copy']
             },
             templates: {
                 files: ['www/**/*.html'],
@@ -133,7 +157,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-http-server');
     grunt.loadNpmTasks('grunt-open');
     grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+
 
     // Wrap up all tasks in a single command
-    grunt.registerTask('default', ['bower_concat', 'sass', 'tags', 'concurrent']);
+    grunt.registerTask('default', ['bower_concat', 'sass', 'tags', 'copy', 'concurrent']);
 }
