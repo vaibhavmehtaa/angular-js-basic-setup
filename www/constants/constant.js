@@ -1,3 +1,3 @@
 app.constant('CONSTANTS', {
-	TEMPLATE_URL: 'templates/';
+	TEMPLATE_URL: 'templates/'
 })

@@ -1,6 +1,6 @@
 /* 
  Author: vaibhav mehta
- Description: Only added some basic task to automate.
+ Description: Only added some basic task to automate dev process.
  git-repo:  https://github.com/vaibhavmehtaa/angular-js-basic-setup
 */
 
@@ -11,15 +11,20 @@ module.exports = function(grunt) {
                 options: {
                     separator: ';'
                 },
+
                 mainFiles: {
-                    "jquery": "jquery"
+                    "jQuery": "jQuery",
+                    bootstrap: [
+                        'dist/js/bootstrap.js',
+                        'dist/css/bootstrap.css'
+                    ]
                 },
                 dest: {
-                    js: 'dist/js/vendor.js',
-                    css: 'dist/css/vendor.css'
+                    js: 'dist/js/_bower.js',
+                    css: 'dist/css/_bower.css'
                 },
                 dependencies: {
-                    'angular': 'jquery'
+                    'angular': ['jQuery']
                 }
             }
         },
@@ -38,16 +43,97 @@ module.exports = function(grunt) {
                     'dist/css/app.css': 'src/scss/app.scss'
                 }]
             },
+        },
+        tags: {
+            buildScripts: {
+                options: {
+                    scriptTemplate: '<script type="text/javascript" src="{{ path }}"></script>',
+                    openTag: '<!-- start script template tags -->',
+                    closeTag: '<!-- end script template tags -->'
+                },
+                src: [
+                    'dist/js/*.js',
+                    'www/**/*.js'
+                ],
+                dest: 'www/index.html'
+            },
+            buildLinks: {
+                options: {
+                    linkTemplate: '<link rel="stylesheet" type="text/css" href="{{ path }}" media="screen"/>',
+                    openTag: '<!-- start css template tags -->',
+                    closeTag: '<!-- end css template tags -->'
+                },
+                src: [
+                    'dist/css/**/*.css'
+                ],
+                dest: 'www/index.html'
+            }
+        },
+        // clean: {
+        //     build: ['path/to/dir/one', 'path/to/dir/two'],
+        //     release: ['path/to/another/dir/one', 'path/to/another/dir/two']
+        // },
+        watch: {
+            css: {
+                files: ['src/scss/**/*.scss'],
+                tasks: ['sass']
+            },
+            bower: {
+                files: ['bower_components/**/*'],
+                tasks: ['bower_concat']
+            },
+            scripts: {
+                files: ['www/**/*.js', 'external_files/**/*.js'],
+                tasks: ['tags']
+            },
+            templates: {
+                files: ['www/**/*.html'],
+                tasks: []
+            },
+            livereload: {
+                // Browser live reloading
+                // https://github.com/gruntjs/grunt-contrib-watch#live-reloading
+                options: {
+                    livereload: true
+                },
+                files: [
+                    'www/**/*'
+                ]
+            }
+        },
+        'serve': {
+            options: {
+                port: 8080
+            }
+        },
+        'open': {
+            'dev': {
+                'path': 'http://localhost:8080/www/index.html'
+            }
+        },
+        concurrent: {
+            target: {
+                tasks: ['serve', 'watch', 'open'],
+                options: {
+                    logConcurrentOutput: true
+                }
+            }
         }
     });
 
 
 
-    // Task runner dependencies
+    // Task dependencies
     grunt.loadNpmTasks('grunt-bower-concat');
     grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-include-source');
+    grunt.loadNpmTasks('grunt-script-link-tags');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-serve');
+    grunt.loadNpmTasks('grunt-http-server');
+    grunt.loadNpmTasks('grunt-open');
+    grunt.loadNpmTasks('grunt-concurrent');
 
-    // Wrap up all commands in single package
-    grunt.registerTask('default', ['sass']);
+    // Wrap up all tasks in a single command
+    grunt.registerTask('default', ['bower_concat', 'sass', 'tags', 'concurrent']);
 }

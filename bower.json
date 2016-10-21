@@ -20,6 +20,7 @@
     "components-font-awesome": "^4.6.3",
     "bootstrap": "^3.3.7",
     "bourbon": "^4.2.7",
-    "angular-ui-router": "^0.3.1"
+    "angular-ui-router": "^0.3.1",
+    "jQuery": "^3.1.1"
   }
 }

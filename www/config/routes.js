@@ -1,9 +1,9 @@
 app.config(function($stateProvider, $urlRouterProvider, CONSTANTS) {
     $stateProvider
         .state('home', {
-            controller: 'homeCtrl',
+            controller: 'mainCtrl',
             url: "/home",
-            templateUrl: "templates/home.html"
+            templateUrl: CONSTANTS + "home.html"
 
         })
 
