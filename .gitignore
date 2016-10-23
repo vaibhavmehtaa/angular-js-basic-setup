@@ -1,0 +1,8 @@
+# ignore bower compoments
+bower_components/
+
+# ignore node modules
+node_modules/
+
+# ignore front add static files
+.sass-cache
