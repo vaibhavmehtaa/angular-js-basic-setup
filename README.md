@@ -34,7 +34,7 @@ In effect, this is what the project tree should look like:
 	+-- directives/
 	+-- factories/
 	+-- filters/
-	+-- modals/
+	+-- partials/
 	+-- modules/
 	+-- services/
 	+-- templates/
